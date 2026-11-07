@@ -1,2 +1,2 @@
 # Mathe-algorithm
-To Add pseudo code etc.  there are problems here
+Code is for ROOT analysis software CERN a free, gewohnungs bedurftig, but very powerful Software package.  Pseudo code is added To description.  
