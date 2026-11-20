@@ -1,0 +1,135 @@
+#include <fstream>
+#include <vector>
+#include <iostream>
+
+#include <TF1.h>
+#include <TMath.h>
+
+void LgndrSld(const char *filename = "data.txt", int olg=1, int wnd=3)
+{
+    std::ifstream infile(filename);
+    
+    if (!infile) {
+        std::cerr << "Cannot open file: " << filename << std::endl;
+        return;
+    }
+    
+    std::vector<double> x, yDt;
+    
+    double yv2, xx;
+    
+    while (infile >> yv2 >> xx) {
+        x.push_back(xx);
+        yDt.push_back(yv2);
+    }
+    
+    // endplot
+
+    double dlt,Sm,Rf,dlx;    
+    int ord,idm,il; 
+    int dtSz,ic,ica,isW;
+
+    dtSz=yDt.size();
+
+    idm=2*wnd+1;
+
+   std::cout << "maximum Legendre oolynomial order (<olg) "<< olg-1<<" \n"; 
+   std::cout << "smoothing window (2*N+1) "<< idm<<" \n"; 
+
+    std::vector<double> lgr(idm);
+    std::vector<double> rslt(dtSz);
+
+//strt
+    for(ic=0; ic<wnd; ic++)
+     {
+   rslt[ic]=0.0;
+   for(il=0; il<olg; il++)
+    {
+     dlt=(ic-wnd)/float(wnd);
+     Sm=0.0; 
+      dlx=-1.0;
+     Sm+=yDt[0]*ROOT::Math::legendre(il,dlx);
+      dlx=1.0;
+     Sm+=yDt[idm]*ROOT::Math::legendre(il,dlx); 
+     isW=abs(1);
+     for(ica=1; ica<idm-1; ica++)
+      {
+       dlx=(-wnd+ica)/float(wnd);
+       Sm+=2*(isW+1)*ROOT::Math::legendre(il,dlx)*yDt[ica];  //probably here
+       isW-=1;
+       isW=abs(isW);
+      }
+     Sm*=(2*il+1)/(3*float(idm-1));
+     rslt[ic]+=Sm*ROOT::Math::legendre(il,dlt);
+    }
+     }
+//strt
+    for(ic=wnd; ic<dtSz-wnd; ic++)
+     {
+//ic
+   rslt[ic]=0.0;
+   for(il=0; il<olg; il++)
+    {
+     dlt=0.0;
+     Sm=0.0; 
+      dlx=-1.0;
+     Sm+=yDt[ic-wnd]*ROOT::Math::legendre(il,dlx);
+      dlx=1.0;
+     Sm+=yDt[ic+wnd]*ROOT::Math::legendre(il,dlx); 
+     isW=abs(1);
+     for(ica=1; ica<idm-1; ica++)
+      {
+       dlx=(-wnd+ica)/float(wnd);
+       Sm+=2*(isW+1)*ROOT::Math::legendre(il,dlx)*yDt[ic-wnd+ica];
+       isW-=1;
+       isW=abs(isW);
+      }
+     Sm*=(2*il+1)/(3*float(idm-1));
+     rslt[ic]+=Sm*ROOT::Math::legendre(il, dlt);
+    }
+// ic     
+     }
+// end
+    for(ic=dtSz-wnd; ic<dtSz; ic++)
+     {
+   rslt[ic]=0.0;
+   for(il=0; il<olg; il++)
+    {
+      dlt=(ic-dtSz+1+wnd)/float(wnd);
+      Sm=0.0;  
+       dlx=-1.0;
+      Sm+=yDt[dtSz-idm-1]*ROOT::Math::legendre(il,dlx);   
+       dlx=1.0;
+      Sm+=yDt[dtSz-1]*ROOT::Math::legendre(il,dlx);   
+      isW=abs(1);
+      for(ica=1; ica<idm-1; ica++)
+       {
+         dlx=(-idm+ica+1+wnd)/float(wnd);  //dtSz-idm+ica-dtSz+1+wnd> -idm+ica+1+wnd
+        Sm+=2*(isW+1)*yDt[dtSz-idm+ica]*ROOT::Math::legendre(il,dlx);
+        isW-=1;
+        isW=abs(isW);
+       }
+      Sm*=(2*il+1)/(3*float(idm-1));
+      rslt[ic]+=Sm*ROOT::Math::legendre(il, dlt);
+     }
+     }
+// end
+
+    TCanvas *c = new TCanvas("cnv1", "", 800, 600);
+    
+    TGraph *gr1 = new TGraph(dtSz, x.data(), yDt.data());    
+    gr1->SetTitle("Legendre Smoothing");
+    gr1->SetMarkerStyle(20);
+    gr1->SetMarkerColor(kBlue);
+    gr1->SetLineColor(kBlue);
+    gr1->SetLineWidth(3);
+
+    TGraph *gr2 = new TGraph(dtSz, x.data(), rslt.data());
+    gr2->SetMarkerStyle(20);
+    gr2->SetMarkerColor(kRed);
+    gr2->SetLineColor(kRed);
+    gr2->SetLineWidth(2); 
+
+    gr1->Draw("AL");
+    gr2->Draw("Same");
+}
