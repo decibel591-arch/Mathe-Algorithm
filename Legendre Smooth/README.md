@@ -3,7 +3,7 @@
 Uses a sliding window of a Legendre polynomial fit.  
 
 
-Start Root
+Start Root in a terminal
 
 load code
 
