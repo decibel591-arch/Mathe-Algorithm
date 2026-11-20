@@ -13,5 +13,5 @@ issue command
 
      LgndrSld("trial.dta", 3, 5)
 
-first argument is file (for the example tial.dta) with data second is maximum polynomial degree (0lg -1) last the size of smoothing window (2*wnd-1).  
+first argument is file (for the example trial.dta) with data second is maximum polynomial degree (0lg -1) last the size of smoothing window (2*wnd-1).  
 
