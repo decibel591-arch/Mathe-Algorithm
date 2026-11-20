@@ -7,7 +7,7 @@ Start Root in a terminal
 
 load code
 
-    .L LgndrSmth
+    .L LgndrSmth.txt
 
 issue command
 
