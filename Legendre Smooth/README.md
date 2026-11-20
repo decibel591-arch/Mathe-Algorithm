@@ -2,6 +2,7 @@
 
 Uses a sliding window of a Legendre polynomial fit.  
 
+[Download Code and example data](https://github.com/user-attachments/files/35157310/CodeData.zip)
 
 Start Root in a terminal
 
@@ -21,6 +22,6 @@ The Figure show that although the smoothing window is large the sharpness of fea
 
 <img width="555" height="400" alt="TopHat" src="https://github.com/user-attachments/assets/8baec037-1981-4934-aa79-43de64466e41" />
 
-This is not the case for a sliding TopHat: The peaks start to broaden and reduce in intensity. 
+This is not the case for a sliding TopHat: The peaks start to broaden and reduce in intensity for a relatively narrow window. 
 
 
