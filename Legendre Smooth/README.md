@@ -2,7 +2,7 @@
 
 Uses a sliding window of a Legendre polynomial fit.  
 
-[CodeData.zip](https://github.com/user-attachments/files/35157926/CodeData.zip)
+[Download Code and data file](https://github.com/user-attachments/files/35157926/CodeData.zip)
 
 Start Root in a terminal
 
