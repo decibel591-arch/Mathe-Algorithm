@@ -1,4 +1,4 @@
-[LgndrSmth.python.py](https://github.com/user-attachments/files/35217100/LgndrSmth.python.py)[LgndrSmth.py](https://github.com/user-attachments/files/35217044/LgndrSmth.py)# Sliding Legendre window
+# Sliding Legendre window
 
 Uses a sliding window of a Legendre polynomial fit.  
 
@@ -24,6 +24,8 @@ The Figure show that although the smoothing window is large the sharpness of fea
 
 This is not the case for a sliding TopHat: The peaks start to broaden and reduce in intensity for a relatively narrow window. 
 
+
+[LgndrSmth.python.py](https://github.com/user-attachments/files/35217100/LgndrSmth.python.py)[LgndrSmth.py](https://github.com/user-attachments/files/35217044/LgndrSmth.py)
 
 
 Python script command
