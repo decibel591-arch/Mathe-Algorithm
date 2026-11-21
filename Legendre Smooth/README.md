@@ -26,6 +26,11 @@ This is not the case for a sliding TopHat: The peaks start to broaden and reduce
 
 Python script
 
+command
+
+     Python3 LgndrSmth "trial.dta" 3 5
+
+
 
 
 
