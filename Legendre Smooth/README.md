@@ -32,3 +32,4 @@ Python script command
 
      Python3 LgndrSmth.py "trial.dta" 3 5
 
+<img width="500" height="350" alt="PythonFigure" src="https://github.com/user-attachments/assets/09db6160-b472-463c-95e7-7c894f1e383f" />
