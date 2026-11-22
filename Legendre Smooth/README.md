@@ -33,3 +33,7 @@ Python script command
      Python3 LgndrSmth.py "trial.dta" 3 5
 
 <img width="500" height="350" alt="PythonFigure" src="https://github.com/user-attachments/assets/09db6160-b472-463c-95e7-7c894f1e383f" />
+
+## Algorhythm  
+
+The code fits a sum of Legendre polynomials to a sliding data window.  The polynomial coefficients are calculated from a simple Simpsons rule integration.  
