@@ -6,7 +6,7 @@ In the limit a peak maximum is quadratic about the maximum.  But it is more prac
 
 [Download ROOT Code file](https://github.com/user-attachments/files/35517078/LgndrPkMx.txt) for peak fit.  
 
-Uses data file file from Legendre Smooth.   
+Uses data file from Legendre Smooth.   
 
 Start Root in a terminal
 
