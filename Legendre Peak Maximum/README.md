@@ -8,5 +8,16 @@ In the limit a peak maximum is quadratic about the maximum.  But it is more prac
 
 Uses data file file from Legendre Smooth.   
 
+Start Root in a terminal
+
+load code
+
+    .L LgndrPkMx.txt
+
+command
+
+     LgndrSld("trial.dta", 3, 5)
+
+
 [Download Python Script](https://github.com/user-attachments/files/35520460/LgndrMax.zip) and data.
 
