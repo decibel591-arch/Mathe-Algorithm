@@ -1,0 +1,114 @@
+#include <fstream>
+#include <vector>
+#include <iostream>
+
+#include <TF1.h>
+#include <TMath.h>
+
+void LgndrMax(const char *filename = "data.txt", int iow=1, int ipx=143)
+{
+    std::ifstream infile(filename);
+    
+    if (!infile) {
+        std::cerr << "Cannot open file: " << filename << std::endl;
+        return;
+    }
+    
+    std::vector<double> x, yDt;
+    
+    double yv2, xx;
+    
+    while (infile >> yv2 >> xx) {
+        x.push_back(xx);
+        yDt.push_back(yv2);
+    }
+
+    double dlt,Sm,Sum,Rf,dlx,dw;    
+    int ord,ipkSz,il,wnd; 
+    int dtSz,ic,ica,isW;
+
+    dtSz=yDt.size();
+
+    ipkSz=5+2*iow;
+     wnd=(ipkSz-1)*0.5;
+    std::vector<double> xPk(ipkSz);
+    std::vector<double> yPk(ipkSz);
+
+    std::vector<double> lgr(4);
+    std::vector<double> rslt(ipkSz);
+
+    for(ic=0; ic<ipkSz; ic++)
+     {
+      yPk[ic]=yDt[ipx-2-iow+ic]; 
+      xPk[ic]=x[ipx-2-iow+ic];
+     }
+    dw=(xPk[ipkSz-1]-xPk[0])/float(ipkSz-1);
+    std::cout <<"step width "<<dw<<" Peak window  "<< ipkSz<<" at "<<ipx<<" file size "<<dtSz<<" \n";
+   rslt[ic]=0.0;
+   for(il=0; il<4; il++)
+    {
+     dlt=0.0;
+     Sm=0.0; 
+      dlx=-1.0;
+     Sm+=yPk[0]*ROOT::Math::legendre(il,dlx);
+      dlx=1.0;
+     Sm+=yPk[ipkSz-1]*ROOT::Math::legendre(il,dlx); 
+     isW=abs(1);
+     for(ica=1; ica<ipkSz-1; ica++)
+      {
+       dlx=(-wnd+ica)/float(wnd);
+       Sm+=2*(isW+1)*ROOT::Math::legendre(il,dlx)*yPk[ica];
+       isW-=1;
+       isW=abs(isW);
+      }
+     Sm*=(2*il+1)/(3*float(ipkSz-1));
+     rslt[ic]+=Sm*ROOT::Math::legendre(il, dlt);
+     lgr[il]=Sm;
+     std::cout <<il<<" lgndr cff  "<<lgr[il]<<" \n";       
+    }
+    Sum=0.0;
+    for(ica=0; ica<ipkSz; ica++)
+     {
+      dlx=(ica-wnd)/float(wnd); 
+      Sm=yPk[ica];
+      yPk[ica]=lgr[0]*ROOT::Math::legendre(0,dlx)+lgr[1]*ROOT::Math::legendre(1,dlx)+lgr[2]*ROOT::Math::legendre(2,dlx)+lgr[3]*ROOT::Math::legendre(3,dlx);  
+      Sm=Sm-yPk[ica];
+      Sum+=Sm*Sm;     
+     }
+     Sum/=(ipkSz-4-1);
+     double erry,errx;
+      erry=TMath::Sqrt(Sum);
+    double cb=lgr[3]*2.5;
+    double qd=lgr[2]*1.5;
+    double ln=lgr[1]-lgr[3]*1.5; 
+      errx=TMath::Sqrt(abs(erry/qd));
+
+     double xmx,ymx;
+     xmx=(-qd-TMath::Sqrt(qd*qd-3*cb*ln))/(3*cb);
+     if(abs(xmx)>1.0)
+       {
+        xmx=(-qd+TMath::Sqrt(qd*qd-3*cb*ln))/(3*cb);
+       }
+      ymx=lgr[0]*ROOT::Math::legendre(0,xmx)+lgr[1]*ROOT::Math::legendre(1,xmx)+lgr[2]*ROOT::Math::legendre(2,xmx)+lgr[3]*ROOT::Math::legendre(3,xmx);  
+     xmx=xPk[wnd]+xmx*wnd*dw;
+    std::cout <<"xmx&xerr "<<xmx<<" "<<errx<<" \n";
+    std::cout <<"ymx&yerr "<<ymx<<" "<<erry<<" \n";
+
+    TCanvas *c = new TCanvas("cnv1", "", 800, 600);
+    
+    TGraph *gr1 = new TGraph(dtSz, x.data(), yDt.data());    
+    gr1->SetTitle("Legendre Peak Maximum Fit (Cubic)");
+    gr1->SetMarkerStyle(20);
+    gr1->SetMarkerColor(kBlue);
+    gr1->SetLineColor(kBlue);
+    gr1->SetLineWidth(3);
+
+    TGraph *gr2 = new TGraph(ipkSz, xPk.data(), yPk.data());
+    gr2->SetMarkerStyle(20);
+    gr2->SetMarkerColor(kRed);
+    gr2->SetLineColor(kRed);
+    gr2->SetLineWidth(2); 
+
+    gr1->Draw("AL");
+    gr2->Draw("Same");
+}
