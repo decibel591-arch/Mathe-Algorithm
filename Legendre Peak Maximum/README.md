@@ -16,8 +16,9 @@ load code
 
 command
 
-     LgndrSld("trial.dta", 3, 5)
+     LgndrMax("trial.dta", 5, 143)
 
+first argument is file with data, second argument defines the fit window and third its data position. 
 
 [Download Python Script](https://github.com/user-attachments/files/35520460/LgndrMax.zip) and data.
 
