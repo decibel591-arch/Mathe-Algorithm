@@ -22,3 +22,5 @@ first argument is file with data, second argument defines the fit window (size 5
 
 [Download Python Script](https://github.com/user-attachments/files/35520460/LgndrMax.zip) and data.
 
+    Python3 LgndrMax.py "trial.dta" 5 143
+
