@@ -1,5 +1,9 @@
 # Cubic peak maximum fit
 
-In the limit a peak maximum is quadratic about the maximum.  But it is more practical, a better approach, to fit a to cubic and slove for the maximum:  Assume the peak is asymmetric.  
+In the limit a peak maximum is quadratic about the maximum.  But it is more practical, a better approach, to fit a to cubic and solve for the maximum:  Assume the peak is asymmetric.  
 
 <img width="567" height="409" alt="PeakMaxFit" src="https://github.com/user-attachments/assets/87fedfe8-f9f7-4041-a57f-afd074e8995f" />
+
+[Root Code] (https://github.com/user-attachments/files/35517078/LgndrPkMx.txt) file for peak fit.  
+
+Uses data file file from Legendre Smooth.   
