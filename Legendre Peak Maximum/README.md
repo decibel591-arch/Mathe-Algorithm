@@ -18,7 +18,7 @@ command
 
      LgndrMax("trial.dta", 5, 143)
 
-first argument is file with data, second argument defines the fit window (size 5+2*iow points) and third the data centre. 
+first argument is file with data, second argument defines the fit window (size 5+2*iow points) and third the window centre. 
 
 [Download Python Script](https://github.com/user-attachments/files/35520460/LgndrMax.zip) and data.
 
